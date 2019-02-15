@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>FRC Dashboard</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link id="theme-link" rel="stylesheet" href="css/red.css">
+    <link rel="stylesheet" href="css/tuning.css">
+</head>
+
+<body>
+    <!-- This is our timer, set to 0:00 until the Javascript runs -->
+    <div id="timer">0:00</div>
+    <!-- This is our header which contains the current state of the robot's connection and a button to reconnect -->
+    <header>
+        <div id="robot-state">Robot disconnected.</div>
+        <button id="connect-button">Connect</button>
+    </header>
+    <!-- This box displays if the Limelight has a valid target in view -->
+    <div id="hasTarget" style="position: fixed; top: 83px; font-size: 70%; font-weight: bold; width: 50vw; height: 20px; color: black; background-color: red; text-align: center; padding-top: 4px;">Target?</div>
+    <!-- This is an empty div that will be filled up by the camera (done in CSS) -->
+    <div id="camera"></div>
+    <!-- This is the main body of the dashboard -->
+    <article>
+        <!-- Gyroscope -->
+        <svg id="gyro">
+            <circle cx="85" cy="85" r="83"></circle>
+            <circle cx="85" cy="85" r="50"></circle>
+            <rect id="gyro-arm" x="80" y="5" width="10" height="80"></rect>
+            <text id="gyro-number" x="90" y="115">0º</text>
+        </svg>
+        <!-- This is our robot diagram which contains the body, arm, and sleigh -->
+        <svg id="robot-diagram" width="535" height="600">
+            <g id="robot-arm">
+              <g id="robot-wrist">
+                <rect x="120" y="436" width="30" height="10"></rect>
+                <rect x="110" y="360" width="10" height="100"></rect>
+                <rect id="robot-hatch-panel" x="105" y="360" width="5" height="100" style="color: yellow !important; display: none;"></rect>
+              </g>
+              <rect id="robot-arm-inner" x="236" y="428" width="10" height="92" transform="rotate(180, 0, 0)"></rect>
+              <rect id="robot-arm-inner" x="160" y="445" width="92" height="10" transform="rotate(45, 0, 0)"></rect>
+              <rect id="robot-arm-inner" x="160" y="371" width="10" height="88.2" transform="rotate(45, 0, 0)"></rect>
+            </g>
+            <g id="robot-sleigh">
+              <circle cx="385" cy="346" r="25"></circle>
+              <circle cx="385" cy="345" r="15"></circle>
+              <rect id="robot-sleigh-inner" x="350" y="345" width="10" height="145" transform="rotate(180, 0, 0)"></rect>
+              <rect x="372" y="345" width="10" height="30" style="stroke: #222;"></rect>
+              <rect x="362" y="344" width="6" height="30" style="stroke: #222;"></rect>
+              <circle id="robot-cargo" cx="385" cy="345" r="15"></circle>
+            </g>
+            <rect id="robot-sleigh-inner" x="360" y="480" width="10" height="30"></rect>
+            <rect x="170" y="510" width="230" height="57.5"></rect>
+            <rect x="180" y="520" width="210" height="40"></rect>
+            <circle cx="200" cy="560" r="25"></circle>
+            <circle cx="360" cy="560" r="25"></circle>
+            <circle cx="280" cy="563" r="25"></circle>
+            <rect x="160" y="530" width="250" height="30"></rect>
+            <text id="team" x="285" y="555" text-anchor="middle">4750</text>
+        </svg>
+    </article>
+    <!-- The sidebar of the dashboard -->
+    <aside>
+        <!-- This is where all of our sensor outputs (numbers, booleans) that are just side information go -->
+        <div id="sensor-outputs">
+            <p id="distance" style="display: inline-block;">Distance: 0</p><p style="display: inline-block;font-size: 70%;">in.</p>
+            <p id="pressure" style="display: inline-block;">Pressure: 0</p><p style="display: inline-block;font-size: 70%;">psi</p>
+        </div>
+        <!-- THESE ARE JUST FOR TESTING AND SHOULD BE REMOVED FOR COMPETITION -->
+        <input type="range" min="-9" max="635" id="arm-position"></input>
+        <input type="range" min="200" max="940" id="sleigh-position"></input>
+        <!-- This is our theme selector so we can change to rainbow theme in a jiffy -->
+        <p>Theme:</p>
+        <div class="select-container">
+            <select id='theme-select'>
+                <option>red</option>
+                <option>dark</option>
+                <option>rainbow</option>
+            </select>
+        </div>
+    </aside>
+    <!-- This is the div that connects the dashboard to the robot -->
+    <div id="login">
+        <input id="connect-address" type="text" value="localhost" disabled>
+        <button id="connect" disabled>Connecting</button>
+        <p id="esc-message">Hit Esc. to use without connecting</p>
+    </div>
+    <!-- This is all the Javascript that makes the dashboard work -->
+    <script src="networktables/networktables.js"></script>
+    <script src="connection.js"></script>
+    <script src="ui.js"></script>
+    <script src="components/themes.js"></script>
+</body>
+
+</html>

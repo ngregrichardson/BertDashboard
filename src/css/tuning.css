@@ -1,0 +1,17 @@
+#tuning {
+    width: 50vw;
+    height: 80vh;
+    bottom: 0;
+    left: 0;
+    display: none;
+}
+#tuning div {
+    margin: 20px 0;
+}
+#tuning p {
+    margin-bottom: 10px;
+}
+input[type="text"],
+input[type="number"] {
+    padding: .5em;
+}
