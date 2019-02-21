@@ -77,13 +77,13 @@ header {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 50vw;
+    width: 43vw;
     height: 80vh;
     overflow: hidden;
     background-color: #333;
     background-image: url('http://10.47.50.12:5800');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size:contain;
 }
 article {
     top: 0;
@@ -123,7 +123,7 @@ text {
 #robot-diagram {
     position: absolute;
     bottom: 1px;
-    right: 1vw;
+    right: 5vw;
     transform: scale(0.7);
 }
 
@@ -139,6 +139,9 @@ text {
   transform-origin: 70% 80%;
 }
 
+#object-distance {
+  margin-top: 3px;
+}
 #robot-arm-inner, #robot-hatch-panel, #robot-sleigh-inner {
     -webkit-transform-origin: right;
     -ms-transform-origin: right;

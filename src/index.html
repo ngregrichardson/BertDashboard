@@ -18,7 +18,7 @@
         <button id="connect-button">Connect</button>
     </header>
     <!-- This box displays if the Limelight has a valid target in view -->
-    <div id="hasTarget" style="position: fixed; top: 83px; font-size: 70%; font-weight: bold; width: 50vw; height: 20px; color: black; background-color: red; text-align: center; padding-top: 4px;">Target?</div>
+    <div id="hasTarget" style="position: fixed; top: 83px; font-size: 70%; font-weight: bold; width: 43vw; height: 20px; color: black; background-color: red; text-align: center; padding-top: 4px;">Target?</div>
     <!-- This is an empty div that will be filled up by the camera (done in CSS) -->
     <div id="camera"></div>
     <!-- This is the main body of the dashboard -->
@@ -65,11 +65,9 @@
         <!-- This is where all of our sensor outputs (numbers, booleans) that are just side information go -->
         <div id="sensor-outputs">
             <p id="distance" style="display: inline-block;">Distance: 0</p><p style="display: inline-block;font-size: 70%;">in.</p>
+            <div id="object-distance" style="width: 100%; display: inline-block; height: 50px;"></div>
             <p id="pressure" style="display: inline-block;">Pressure: 0</p><p style="display: inline-block;font-size: 70%;">psi</p>
         </div>
-        <!-- THESE ARE JUST FOR TESTING AND SHOULD BE REMOVED FOR COMPETITION -->
-        <input type="range" min="-9" max="635" id="arm-position"></input>
-        <input type="range" min="200" max="940" id="sleigh-position"></input>
         <!-- This is our theme selector so we can change to rainbow theme in a jiffy -->
         <p>Theme:</p>
         <div class="select-container">

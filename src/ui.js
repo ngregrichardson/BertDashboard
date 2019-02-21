@@ -21,10 +21,21 @@ let ui = {
     sensors: {
       hasTarget: document.getElementById('hasTarget'),
       distance: document.getElementById('distance'),
+      objectDistance: document.getElementById('object-distance'),
       pressure: document.getElementById('pressure')
-    },
-    armPosition: document.getElementById('arm-position'),
-    sleighPosition: document.getElementById('sleigh-position')
+    }
+};
+
+// This updates the gyro rotation
+let updateGyro = (key, value) => {
+    ui.gyro.val = value;
+    ui.gyro.visualVal = Math.floor(ui.gyro.val - ui.gyro.offset);
+    ui.gyro.visualVal %= 360;
+    if (ui.gyro.visualVal < 0) {
+        ui.gyro.visualVal += 360;
+    }
+    ui.gyro.arm.style.transform = `rotate(${ui.gyro.visualVal}deg)`;
+    ui.gyro.number.innerHTML = ui.gyro.visualVal + 'º';
 };
 
 /* These are all your listeners. When the value in the network table is changes, this will run */
@@ -34,15 +45,16 @@ NetworkTables.addKeyListener('/dashboard/angle', updateGyro);
 
 // This runs when the value from the arm encoder is updated
 NetworkTables.addKeyListener('/dashboard/arm', (key, value) => {
+    var num = -(Math.floor(value / 50.47) - 635);
     // This constrains the arm between two values
-    if (value > 635) {
-        value = 635;
+    if (num > 635) {
+        num = 635;
     }
-    else if (value < -9) {
-        value = -9;
+    else if (num < -9) {
+        num = -9;
     }
     // Calculate visual rotation of arm
-    var armAngle = value * 3 / 20 - 45;
+    var armAngle = num * 3 / 20 - 45;
     // Rotate the arm in diagram to match real arm
     ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg)`;
 });
@@ -72,6 +84,13 @@ NetworkTables.addKeyListener('/dashboard/hasTarget', (key, value) => {
 NetworkTables.addKeyListener('/dashboard/distance', (key, value) => {
   // This updates the distance value with the current distance
   ui.sensors.distance.innerHTML = 'Distance: ' + Math.round(value * 100) / 100 + ' ';
+  if((Math.round(value * 100) / 100) <= 19 && (Math.round(value * 100) / 100) > 15) {
+    ui.sensors.objectDistance.style.backgroundColor = 'yellow';
+  }else if((Math.round(value * 100) / 100) <= 15) {
+    ui.sensors.objectDistance.style.backgroundColor = 'lime';
+  }else {
+    ui.sensors.objectDistance.style.backgroundColor = 'red';
+  }
 });
 
 // This runs when the pressure value from the pressure sensor is updated
@@ -104,30 +123,7 @@ NetworkTables.addKeyListener('/dashboard/time', (key, value) => {
     ui.timer.innerHTML = value < 0 ? '0:00' : Math.floor(value / 60) + ':' + (value % 60 < 10 ? '0' : '') + Math.floor(value % 60);
 });
 
-// This updates the gyro rotation
-let updateGyro = (key, value) => {
-    ui.gyro.val = value;
-    ui.gyro.visualVal = Math.floor(ui.gyro.val - ui.gyro.offset);
-    ui.gyro.visualVal %= 360;
-    if (ui.gyro.visualVal < 0) {
-        ui.gyro.visualVal += 360;
-    }
-    ui.gyro.arm.style.transform = `rotate(${ui.gyro.visualVal}deg)`;
-    ui.gyro.number.innerHTML = ui.gyro.visualVal + 'º';
-};
-
 // This listens for network table errors and displays them
 addEventListener('error',(ev)=>{
     ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})
 });
-
-/* THESE ARE ONLY USED FOR TESTING AND SHOULD BE REMOVED FOR COMPETITION */
-ui.armPosition.oninput = function() {
- var armAngle = this.value * 3 / 20 - 45;
- ui.robotDiagram.arm.style.transform = `rotate(${armAngle}deg)`;
-}
-
-ui.sleighPosition.oninput = function() {
- var armAngle = this.value * 3 / 20 - 45;
- ui.robotDiagram.sleigh.style.transform = `rotate(${armAngle}deg)`;
-}

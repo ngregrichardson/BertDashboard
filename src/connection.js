@@ -27,10 +27,7 @@ onkeydown = key => {
  */
 function onRobotConnection(connected) {
   var state = connected ? 'Robot connected!' : 'Robot disconnected.';
-  var stateColor = connected ? 'solid 10px green' : 'solid 10px red';
-  console.log(state);
   ui.robotState.textContent = state;
-  ui.robotStateColor.style.borderLeft = stateColor;
 
   buttonConnect.onclick = () => {
     document.body.classList.toggle('login', true);
@@ -39,7 +36,6 @@ function onRobotConnection(connected) {
   if (connected) {
     // On connect hide the connect popup
     document.body.classList.toggle('login', false);
-    address.buttonConnect.style.display = 'none';
     loginShown = false;
   } else if (loginShown) {
     setLogin();
@@ -52,10 +48,14 @@ function setLogin() {
   connect.textContent = 'Connect';
   // Add the default address and select xxxx
   address.value = 'roborio-4750-frc.local';
+  address.focus();
+  address.setSelectionRange(8, 12);
 }
 // On click try to connect and disable the input and the button
 connect.onclick = () => {
-  attempt();
+  ipc.send('connect', address.value);
+  address.disabled = connect.disabled = true;
+  connect.textContent = 'Connecting...';
 };
 address.onkeydown = ev => {
   if (ev.key === 'Enter') {
@@ -65,12 +65,6 @@ address.onkeydown = ev => {
   }
 };
 
-function attempt() {
-  ipc.send('connect', address.value);
-  address.disabled = connect.disabled = true;
-  connect.textContent = 'Connecting...';
-}
-
 // Show login when starting
+document.body.classList.toggle('login', true);
 setLogin();
-attempt();
