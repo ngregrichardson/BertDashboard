@@ -33,22 +33,22 @@
         <!-- This is our robot diagram which contains the body, arm, and sleigh -->
         <svg id="robot-diagram" width="535" height="600">
             <g id="robot-arm">
-              <g id="robot-wrist">
-                <rect x="120" y="436" width="30" height="10"></rect>
-                <rect x="110" y="360" width="10" height="100"></rect>
-                <rect id="robot-hatch-panel" x="105" y="360" width="5" height="100" style="color: yellow !important; display: none;"></rect>
-              </g>
-              <rect id="robot-arm-inner" x="236" y="428" width="10" height="92" transform="rotate(180, 0, 0)"></rect>
-              <rect id="robot-arm-inner" x="160" y="445" width="92" height="10" transform="rotate(45, 0, 0)"></rect>
-              <rect id="robot-arm-inner" x="160" y="371" width="10" height="88.2" transform="rotate(45, 0, 0)"></rect>
+                <g id="robot-wrist">
+                    <rect x="120" y="436" width="30" height="10"></rect>
+                    <rect x="110" y="360" width="10" height="100"></rect>
+                    <rect id="robot-hatch-panel" x="105" y="360" width="5" height="100" style="color: yellow !important; display: none;"></rect>
+                </g>
+                <rect id="robot-arm-inner" x="236" y="428" width="10" height="92" transform="rotate(180, 0, 0)"></rect>
+                <rect id="robot-arm-inner" x="160" y="445" width="92" height="10" transform="rotate(45, 0, 0)"></rect>
+                <rect id="robot-arm-inner" x="160" y="371" width="10" height="88.2" transform="rotate(45, 0, 0)"></rect>
             </g>
             <g id="robot-sleigh">
-              <circle cx="385" cy="346" r="25"></circle>
-              <circle cx="385" cy="345" r="15"></circle>
-              <rect id="robot-sleigh-inner" x="350" y="345" width="10" height="145" transform="rotate(180, 0, 0)"></rect>
-              <rect x="372" y="345" width="10" height="30" style="stroke: #222;"></rect>
-              <rect x="362" y="344" width="6" height="30" style="stroke: #222;"></rect>
-              <circle id="robot-cargo" cx="385" cy="345" r="15"></circle>
+                <circle cx="385" cy="346" r="25"></circle>
+                <circle cx="385" cy="345" r="15"></circle>
+                <rect id="robot-sleigh-inner" x="350" y="345" width="10" height="145" transform="rotate(180, 0, 0)"></rect>
+                <rect x="372" y="345" width="10" height="30" style="stroke: #222;"></rect>
+                <rect x="362" y="344" width="6" height="30" style="stroke: #222;"></rect>
+                <circle id="robot-cargo" cx="385" cy="345" r="15"></circle>
             </g>
             <rect id="robot-sleigh-inner" x="360" y="480" width="10" height="30"></rect>
             <rect x="170" y="510" width="230" height="57.5"></rect>
@@ -64,9 +64,12 @@
     <aside>
         <!-- This is where all of our sensor outputs (numbers, booleans) that are just side information go -->
         <div id="sensor-outputs">
-            <p id="distance" style="display: inline-block;">Distance: 0</p><p style="display: inline-block;font-size: 70%;">in.</p>
+            <p id="distance" style="display: inline-block;">Distance: 0</p>
+            <p style="display: inline-block;font-size: 70%;">in.</p>
             <div id="object-distance" style="width: 100%; display: inline-block; height: 50px;"></div>
-            <p id="pressure" style="display: inline-block;">Pressure: 0</p><p style="display: inline-block;font-size: 70%;">psi</p>
+            <p id="pressure" style="display: inline-block;">Pressure: 0</p>
+            <p style="display: inline-block;font-size: 70%;">psi</p>
+            <div id="pressure-gauge" style="width: 100%; display: inline-block; height: 50px;"></div>
         </div>
         <!-- This is our theme selector so we can change to rainbow theme in a jiffy -->
         <p>Theme:</p>

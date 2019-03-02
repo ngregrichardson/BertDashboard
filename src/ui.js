@@ -19,10 +19,11 @@ let ui = {
         cargo: document.getElementById('robot-cargo')
     },
     sensors: {
-      hasTarget: document.getElementById('hasTarget'),
-      distance: document.getElementById('distance'),
-      objectDistance: document.getElementById('object-distance'),
-      pressure: document.getElementById('pressure')
+        hasTarget: document.getElementById('hasTarget'),
+        distance: document.getElementById('distance'),
+        objectDistance: document.getElementById('object-distance'),
+        pressure: document.getElementById('pressure'),
+        pressureGauge: document.getElementById('pressure-gauge')
     }
 };
 
@@ -76,45 +77,52 @@ NetworkTables.addKeyListener('/dashboard/sleigh', (key, value) => {
 
 // This runs when the hasTarget value is updated
 NetworkTables.addKeyListener('/dashboard/hasTarget', (key, value) => {
-  // This sets the color of the hasTarget box to green or red depending on the value of hasTarget
-  ui.sensors.hasTarget.style.backgroundColor = value ? 'lime' : 'red';
+    // This sets the color of the hasTarget box to green or red depending on the value of hasTarget
+    ui.sensors.hasTarget.style.backgroundColor = value ? 'lime' : 'red';
 });
 
 // This runs when the distance value from the ultrasonic sensor is updated
 NetworkTables.addKeyListener('/dashboard/distance', (key, value) => {
-  // This updates the distance value with the current distance
-  ui.sensors.distance.innerHTML = 'Distance: ' + Math.round(value * 100) / 100 + ' ';
-  if((Math.round(value * 100) / 100) <= 19 && (Math.round(value * 100) / 100) > 15) {
-    ui.sensors.objectDistance.style.backgroundColor = 'yellow';
-  }else if((Math.round(value * 100) / 100) <= 15) {
-    ui.sensors.objectDistance.style.backgroundColor = 'lime';
-  }else {
-    ui.sensors.objectDistance.style.backgroundColor = 'red';
-  }
+    // This updates the distance value with the current distance
+    ui.sensors.distance.innerHTML = 'Distance: ' + Math.round(value * 100) / 100 + ' ';
+    if ((Math.round(value * 100) / 100) <= 19 && (Math.round(value * 100) / 100) > 15) {
+        ui.sensors.objectDistance.style.backgroundColor = 'yellow';
+    } else if ((Math.round(value * 100) / 100) <= 15) {
+        ui.sensors.objectDistance.style.backgroundColor = 'lime';
+    } else {
+        ui.sensors.objectDistance.style.backgroundColor = 'red';
+    }
 });
 
 // This runs when the pressure value from the pressure sensor is updated
 NetworkTables.addKeyListener('/dashboard/pressure', (key, value) => {
-  // This updates the pressure value with the current pressure
-  ui.sensors.pressure.innerHTML = 'Pressure: ' + Math.round(value * 100) / 100 + ' ';
+    // This updates the pressure value with the current pressure
+    ui.sensors.pressure.innerHTML = 'Pressure: ' + Math.round(value * 100) / 100 + ' ';
+    if ((Math.round(value * 100) / 100) < 100 && (Math.round(value * 100) / 100) > 60) {
+        ui.sensors.objectDistance.style.backgroundColor = 'yellow';
+    } else if ((Math.round(value * 100) / 100) <= 60) {
+        ui.sensors.objectDistance.style.backgroundColor = 'red';
+    } else {
+        ui.sensors.objectDistance.style.backgroundColor = 'lime';
+    }
 });
 
 // This runs when the value from the limit switch on the hatch is updated
 NetworkTables.addKeyListener('/dashboard/hatch-panel', (key, value) => {
-  // This shows/hides the hatch-panel element based on the current value of the limit switch
-  ui.robotDiagram.hatchPanel.style.display = value ? 'block' : 'none';
+    // This shows/hides the hatch-panel element based on the current value of the limit switch
+    ui.robotDiagram.hatchPanel.style.display = value ? 'block' : 'none';
 });
 
 // This runs when the value from the IR sensor on the cargo
 NetworkTables.addKeyListener('/dashboard/robot-cargo', (key, value) => {
-  // This shows/hides the cargo element based on the current value of the IR sensor
-  ui.robotDiagram.cargo.style.display = value ? 'block' : 'none';
+    // This shows/hides the cargo element based on the current value of the IR sensor
+    ui.robotDiagram.cargo.style.display = value ? 'block' : 'none';
 });
 
 // This runs when the wrist piston value is updated
 NetworkTables.addKeyListener('/dashboard/wrist', (key, value) => {
-  // This rotates the wrist based on the current value of the wrist piston
-  ui.robotDiagram.wrist.style.transform = value ? `rotate(${-45})` : `rotate(0deg)`;
+    // This rotates the wrist based on the current value of the wrist piston
+    ui.robotDiagram.wrist.style.transform = value ? `rotate(${-45})` : `rotate(0deg)`;
 });
 
 // This runs when the time left value is updated
@@ -124,6 +132,6 @@ NetworkTables.addKeyListener('/dashboard/time', (key, value) => {
 });
 
 // This listens for network table errors and displays them
-addEventListener('error',(ev)=>{
-    ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})
+addEventListener('error', (ev) => {
+    ipc.send('windowError', { mesg: ev.message, file: ev.filename, lineNumber: ev.lineno })
 });
