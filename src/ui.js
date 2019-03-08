@@ -99,11 +99,11 @@ NetworkTables.addKeyListener('/dashboard/pressure', (key, value) => {
     // This updates the pressure value with the current pressure
     ui.sensors.pressure.innerHTML = 'Pressure: ' + Math.round(value * 100) / 100 + ' ';
     if ((Math.round(value * 100) / 100) < 100 && (Math.round(value * 100) / 100) > 60) {
-        ui.sensors.objectDistance.style.backgroundColor = 'yellow';
+        ui.sensors.pressureGauge.style.backgroundColor = 'yellow';
     } else if ((Math.round(value * 100) / 100) <= 60) {
-        ui.sensors.objectDistance.style.backgroundColor = 'red';
+        ui.sensors.pressureGauge.style.backgroundColor = 'red';
     } else {
-        ui.sensors.objectDistance.style.backgroundColor = 'lime';
+        ui.sensors.pressureGauge.style.backgroundColor = 'lime';
     }
 });
 
